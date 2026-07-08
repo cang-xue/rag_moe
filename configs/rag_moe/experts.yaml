@@ -1,0 +1,59 @@
+experts:
+  itsc:
+    class: ITSCExpert
+    enabled: true
+    mode: residual
+    checkpoint_path: ""
+    bank_path: ./data/rag_bank/itsc/Delivery_SH_source_bank_5000_v5.pkl
+    model_config:
+      node_dim: 32
+      input_len: 24
+      in_dim: 1
+      embed_dim: 64
+      output_len: 24
+      num_layer: 3
+      llm_enc_dim: 4096
+      mp_layers: 1
+      enable_rag: true
+      rag_use_bank_prior: true
+    retriever_pretrained_path: ""
+    top_k: 5
+    temperature: 0.2
+    scale: 1.0
+
+  raft:
+    class: RAFTExpert
+    enabled: true
+    mode: residual
+    bank_path: ./data/rag_bank/raft/Delivery_SH_temporal_shape_bank.pt
+    top_k: 5
+    temperature: 0.1
+    prior_alpha: 0.0
+    output_len: 24
+    output_dim: 1
+    scale: 1.0
+
+  tpb:
+    class: TPBExpert
+    enabled: true
+    mode: final_prediction
+    checkpoint_path: ""
+    bank_dir: ./data/rag_bank/tpb
+    bank_name: ""
+    model_config:
+      node_dim: 32
+      input_len: 24
+      in_dim: 1
+      embed_dim: 64
+      output_len: 24
+      num_layer: 3
+      llm_enc_dim: 4096
+      supports_len: 1
+      mp_layers: 1
+    top_k: 8
+    temperature: 1.0
+    patch_len: 12
+    prior_alpha: 0.0
+    output_len: 24
+    output_dim: 1
+    scale: 1.0

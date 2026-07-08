@@ -1,0 +1,16 @@
+router:
+  hidden_dim: 128
+  dropout: 0.1
+  include_baseline: true
+
+  stage1:
+    type: multilabel_selector
+    threshold: 0.5
+
+  stage2:
+    type: masked_softmax_weighter
+
+  losses:
+    lambda_select: 0.2
+    lambda_sparse: 0.01
+    oracle_margin: 0.98

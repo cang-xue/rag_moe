@@ -1,0 +1,58 @@
+experts:
+  itsc:
+    class: ITSCExpert
+    enabled: true
+    mode: prior
+    output_len: 24
+    output_dim: 1
+    scale: 1.0
+
+  calibration:
+    class: CalibrationResidualExpert
+    enabled: true
+    mode: identity
+    output_len: 24
+    output_dim: 1
+    scale: 1.0
+    bias: 0.0
+
+  source_window:
+    class: SourceWindowExpert
+    enabled: true
+    mode: residual
+    bank_path: ""
+    top_k: 5
+    temperature: 0.1
+    alpha: 0.0
+    min_top1: 0.7
+    min_margin: 0.02
+    max_entropy: 0.85
+    confidence_threshold: 0.7
+    output_len: 24
+    output_dim: 1
+
+  volatility_peak:
+    class: VolatilityPeakExpert
+    enabled: true
+    mode: identity
+    checkpoint_path: ""
+    hidden_dim: 8
+    max_abs_delta: 0.0
+    min_history_std: 0.0
+    min_history_max: 0.0
+    output_len: 24
+    output_dim: 1
+
+  itsc_segment_gate:
+    class: ITSCSegmentGateExpert
+    enabled: true
+    mode: residual
+    base_itsc_config: configs/rag_moe/experts_custom.yaml
+    checkpoint_path: ""
+    hidden_dim: 8
+    gate_mode: zero
+    gate_scale: 0.0
+    gate_bias: 0.0
+    min_gate_available: 0.0
+    output_len: 24
+    output_dim: 1

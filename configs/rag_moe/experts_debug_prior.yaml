@@ -1,0 +1,50 @@
+experts:
+  itsc:
+    class: ITSCExpert
+    enabled: true
+    mode: prior
+    checkpoint_path: ""
+    bank_path: ""
+    model_config: {}
+    require_artifacts: true
+    bank_dir: ./data/rag_bank/itsc
+    top_k: 5
+    temperature: 0.2
+    use_hour_bucket: true
+    use_weekday_filter: true
+    use_retriever_encoder: true
+    retriever_dim: 128
+    retriever_pretrained_path: ""
+    require_retriever_pretrained: true
+    scale: 1.0
+
+  raft:
+    class: RAFTExpert
+    enabled: true
+    mode: prior
+    checkpoint_path: ""
+    retrieval_cache_path: ""
+    model_config: {}
+    require_artifacts: true
+    bank_dir: ./data/rag_bank/raft
+    top_k: 5
+    temperature: 0.1
+    temporal_shape: true
+    scale: 1.0
+
+  tpb:
+    class: TPBExpert
+    enabled: true
+    mode: prior
+    checkpoint_path: ""
+    pattern_path: ""
+    config_path: ""
+    original_code_path: ""
+    model_config: {}
+    require_artifacts: true
+    bank_dir: ./data/rag_bank/tpb
+    top_k: 8
+    temperature: 1.0
+    patch_len: 12
+    source_weighting: uniform
+    scale: 1.0
