@@ -3,6 +3,7 @@ from typing import Dict
 import torch
 import torch.nn.functional as F
 
+from src.rag_moe.router_targets import build_good_expert_targets
 from src.utils.metrics import masked_mae
 from src.utils.helper import move_batch_meta, split_batch
 
@@ -12,8 +13,7 @@ def compute_good_experts(candidates: torch.Tensor, label: torch.Tensor, oracle_m
         raise ValueError("candidates must be [B, T, E, N, C]")
     label_expanded = label.unsqueeze(2)
     errors = (candidates - label_expanded).abs().mean(dim=(1, 4)).permute(0, 2, 1)
-    baseline_error = errors[:, :, 0:1]
-    good = errors <= baseline_error * float(oracle_margin)
+    good = build_good_expert_targets(errors, oracle_margin=oracle_margin)
     return good, errors
 
 

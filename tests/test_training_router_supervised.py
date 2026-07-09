@@ -6,6 +6,19 @@ import torch
 
 
 class TrainingRouterSupervisedTest(unittest.TestCase):
+    def test_build_good_expert_targets_keeps_baseline_and_masks_unavailable(self):
+        from experiments.training.train_router_supervised import build_good_expert_targets
+
+        candidate_errors = torch.tensor([[[5.0, 4.8, 4.0], [3.0, 2.0, 2.5]]])
+        available = torch.tensor([[[True, True, False], [True, False, True]]])
+
+        good = build_good_expert_targets(candidate_errors, available, oracle_margin=0.98)
+
+        self.assertTrue(torch.equal(
+            good,
+            torch.tensor([[[True, True, False], [True, False, True]]]),
+        ))
+
     def test_train_router_supervised_from_cache_writes_router_artifacts(self):
         from experiments.training.train_router_supervised import train_router_supervised_from_cache
 

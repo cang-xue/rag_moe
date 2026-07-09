@@ -158,7 +158,7 @@ class RAGMoERouterTrainingTest(unittest.TestCase):
         self.assertEqual(first_known, {1, 3})
         self.assertEqual(second_known, {0, 2})
 
-    def test_compute_good_experts_uses_baseline_relative_margin(self):
+    def test_compute_good_experts_keeps_baseline_fallback_trainable(self):
         candidates = torch.tensor(
             [
                 [
@@ -174,7 +174,7 @@ class RAGMoERouterTrainingTest(unittest.TestCase):
 
         self.assertEqual(tuple(good.shape), (1, 1, 3))
         self.assertEqual(tuple(errors.shape), (1, 1, 3))
-        self.assertFalse(good[0, 0, 0].item())
+        self.assertTrue(good[0, 0, 0].item())
         self.assertTrue(good[0, 0, 1].item())
         self.assertTrue(good[0, 0, 2].item())
 

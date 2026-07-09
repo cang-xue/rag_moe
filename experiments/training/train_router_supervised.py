@@ -10,6 +10,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".
 import torch
 import torch.nn.functional as F
 
+from src.rag_moe.router_targets import build_good_expert_targets
 from src.rag_moe.router import TwoStageRAGRouter
 
 
@@ -18,15 +19,6 @@ def _safe_torch_load(path, map_location="cpu"):
         return torch.load(path, map_location=map_location, weights_only=True)
     except TypeError:
         return torch.load(path, map_location=map_location)
-
-
-def build_good_expert_targets(candidate_errors, available, oracle_margin=0.98):
-    if candidate_errors.shape != available.shape:
-        raise ValueError("candidate_errors and available must have the same shape")
-    baseline = candidate_errors[..., 0:1]
-    good = candidate_errors <= baseline * float(oracle_margin)
-    return good & available.bool()
-
 
 def _split_indices(cache, split_name):
     metadata = cache.get("metadata") or {}
